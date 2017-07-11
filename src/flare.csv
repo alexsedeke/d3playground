@@ -1,0 +1,14 @@
+id,value
+flare,
+flare.web,
+flare.web.HTML,160
+flare.web.ECMAScript,160
+flare.web.CSS, 200
+flare.web.PHP, 180
+flare.languages.PASCAL, 150
+flare.languages.GO, 30
+flare.languages.PERL, 30
+flare.languages.C++, 30
+flare.languages.PYTHON, 60
+flare.database,
+flare.database.SQL, 200
