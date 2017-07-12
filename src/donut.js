@@ -8,10 +8,11 @@ function donutChart() {
     var height = 300;
     var radius = Math.min(width, height) / 2;
 
-    var color = d3.scaleOrdinal(d3.schemeCategory20c);
+    var color = d3.scaleQuantize().domain( [ 1, 100 ] ).range( [ "#70D8ED", "#008EDD", "#008EDD", "#008EDD" ] );
 
     var svg = d3.select('#chart')
       .append('svg')
+      .attr('text-anchor', 'middle')
       .attr( "preserveAspectRatio", "xMinYMin meet" )
       .attr( "viewBox", "0 0 300 300")
       .attr( "width", "100%")
@@ -24,12 +25,11 @@ function donutChart() {
       .innerRadius(radius - donutWidth)
       .outerRadius(radius);
 
-    var pie = d3.pie().padAngle(.05).startAngle(-3 * Math.PI)
+    var pie = d3.pie()
+      .padAngle(.05)
+      .startAngle(-3 * Math.PI)
       .value(function(d) { return d.value; })
       .sort(null);
-
-    var legendRectSize = 18;
-            var legendSpacing = 4;
 
     var path = svg.selectAll('path')
       .data(pie(dataset))
@@ -38,8 +38,20 @@ function donutChart() {
       .attr('d', arc)
       .attr('fill', function(d, i) {
         return color(d.data.value);
-
       });
+
+    var legendRectSize = 18;
+    var legendSpacing = 4;
+    var legend = svg.selectAll('.legend')
+      .data(dataset)
+      .enter()
+      .append('g')
+      .attr('class', 'legend');
+
+    legend.append('text')
+      .attr('y', legendRectSize - legendSpacing)
+      .attr("dy", ".35em")
+      .text(function(d) { console.log(d); return d.caption; });
 }
 
 donutChart();
